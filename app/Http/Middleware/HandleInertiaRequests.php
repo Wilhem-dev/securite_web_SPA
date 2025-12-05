@@ -38,6 +38,16 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        $adminDomain = env('ADMIN_EMAIL_DOMAIN');
+        if (!empty($adminDomain) && is_string($adminDomain)) {
+            $adminDomain = trim($adminDomain);
+            if (!str_starts_with($adminDomain, '@')) {
+                $adminDomain = '@' . $adminDomain;
+            }
+        } else {
+            $adminDomain = null;
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -46,6 +56,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'adminEmailDomain' => $adminDomain,
         ];
     }
 }

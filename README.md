@@ -6,10 +6,10 @@ Ce README rassemble toutes les commandes et étapes nécessaires pour pouvoir cl
 
 ## Prérequis
 
-- PHP 8.x (vérifier la version compatibilité avec le projet)
+- PHP 8.2 (vérifier la version compatibilité avec le projet)
 - Composer
 - Node.js (16+) et npm
-- Base de données (MySQL / MariaDB / PostgreSQL ou SQLite)
+- Base de données (MySQL)
 - Git
 
 ---
@@ -60,23 +60,14 @@ cp .env.example .env
 Puis éditez `.env` pour configurer la connexion à la base de données :
 
 - Pour MySQL/MariaDB ou PostgreSQL :
-  - DB_CONNECTION=mysql
-  - DB_HOST=127.0.0.1
-  - DB_PORT=3306
-  - DB_DATABASE=nom_de_la_base
-  - DB_USERNAME=utilisateur
-  - DB_PASSWORD=mot_de_passe
+    - DB_CONNECTION=mysql
+    - DB_HOST=127.0.0.1
+    - DB_PORT=3306
+    - DB_DATABASE=nom_de_la_base
+    - DB_USERNAME=utilisateur
+    - DB_PASSWORD=mot_de_passe
 
-- Pour SQLite (option simple pour un test rapide) :
-  1. Créez le fichier sqlite :
-  ```bash
-  touch database/database.sqlite
-  ```
-  2. Dans `.env` :
-  ```env
-  DB_CONNECTION=sqlite
-  DB_DATABASE=${PWD}/database/database.sqlite
-  ```
+- Une fichier .env contenant le mot de passe et le domaine admin vous serez envoyer pour créer un compte admin
 
 Générez la clé d'application Laravel :
 
@@ -100,7 +91,23 @@ Si vous souhaitez repartir d'une base propre :
 php artisan migrate:fresh --seed
 ```
 
----
+Créer la table Animals
+
+```bash
+CREATE TABLE `animals` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `type` varchar(191) NOT NULL,
+  `image` text NOT NULL,
+  `description` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+Une exportation de la bdd vous serez envoyer pour les même base de donnée
+
+- ***
 
 ## 6) Lancer l'application en développement
 
@@ -109,7 +116,7 @@ Ce projet utilise Vite pour le frontend et Laravel pour le backend. Ouvrez deux 
 Terminal :
 
 ```bash
-composer run dev 
+composer run dev
 ```
 
 Ensuite ouvrez dans le navigateur :

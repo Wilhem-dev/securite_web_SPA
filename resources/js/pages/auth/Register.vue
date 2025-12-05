@@ -9,11 +9,24 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
-import { Form, Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Form, Head, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+
+const page = usePage();
+const adminEmailDomain = computed(() => page.props.adminEmailDomain as string | null);
+const emailValue = ref('');
 
 const consentChecked = ref(false);
 const consentSubmitted = ref(false);
+
+const showAdminPassword = computed(() => {
+    if (!adminEmailDomain.value || !emailValue.value) {
+        return false;
+    }
+    const email = emailValue.value.toLowerCase().trim();
+    const domain = adminEmailDomain.value.toLowerCase();
+    return email.endsWith(domain);
+});
 
 const handleSubmit = (e: Event) => {
     if (!consentChecked.value) {
@@ -66,6 +79,7 @@ const handleSubmit = (e: Event) => {
                         autocomplete="email"
                         name="email"
                         placeholder="email@example.com"
+                        v-model="emailValue"
                     />
                     <InputError :message="errors.email" />
                 </div>
@@ -98,7 +112,7 @@ const handleSubmit = (e: Event) => {
                     <InputError :message="errors.password_confirmation" />
                 </div>
 
-                <div class="grid gap-2">
+                <div v-if="showAdminPassword" class="grid gap-2">
                     <div class="p-4 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg">
                         <Label for="admin_password" class="text-amber-800 dark:text-amber-200">
                             🔒 Admin Password
@@ -109,8 +123,9 @@ const handleSubmit = (e: Event) => {
                             :tabindex="5"
                             autocomplete="off"
                             name="admin_password"
-                            placeholder="Enter admin password (if required)"
+                            placeholder="Enter admin password (required)"
                             class="border-amber-300 dark:border-amber-700 focus:border-amber-500 focus:ring-amber-500"
+                            required
                         />
                         <p class="mt-1 text-sm text-amber-600 dark:text-amber-400">
                             Required for creating admin accounts
@@ -124,7 +139,7 @@ const handleSubmit = (e: Event) => {
                         <Checkbox
                             id="consent_checkbox"
                             v-model:checked="consentChecked"
-                            :tabindex="6"
+                            :tabindex="showAdminPassword ? 6 : 5"
                             name="consent"
                             required
                             class="mt-1"
@@ -148,7 +163,7 @@ const handleSubmit = (e: Event) => {
                 <Button
                     type="submit"
                     class="mt-2 w-full"
-                    :tabindex="7"
+                    :tabindex="showAdminPassword ? 7 : 6"
                     :disabled="processing"
                     data-test="register-user-button"
                 >
@@ -162,7 +177,7 @@ const handleSubmit = (e: Event) => {
                 <TextLink
                     :href="login()"
                     class="underline underline-offset-4"
-                    :tabindex="8"
+                    :tabindex="showAdminPassword ? 8 : 7"
                 >
                     Log in
                 </TextLink>
