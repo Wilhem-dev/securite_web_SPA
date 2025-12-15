@@ -1,8 +1,9 @@
 # Projet SPA - Animaux
 
-Ce README rassemble toutes les commandes et étapes nécessaires pour pouvoir cloner le projet, l'installer et le lancer localement.
+## Contexte du Projet
 
----
+Ce projet a été réalisé dans le cadre du cours de **Sécurité Web** ayant pour objectif la conception et le développement d'une application web sécurisée. L'accent a été mis sur l'implémentation des bonnes pratiques de sécurité tout au long du cycle de développement.<br>
+En utilisant Laravel, nous bénéficions d'un framework qui intègre nativement de nombreuses protections, tout en nous permettant d'ajouter des couches de sécurité supplémentaires spécifiques à notre domaine.
 
 ## Prérequis
 
@@ -67,7 +68,7 @@ Puis éditez `.env` pour configurer la connexion à la base de données :
     - DB_USERNAME=utilisateur
     - DB_PASSWORD=mot_de_passe
 
-- Une fichier .env contenant le mot de passe et le domaine admin vous serez envoyer pour créer un compte admin
+- Une fichier .env spécial contenant le mot de passe et le domaine admin vous serez envoyer pour créer un compte admin .Sinon créer un compte utilisateur et changer directement dans la bdd le role user en admin.
 
 Générez la clé d'application Laravel :
 
@@ -89,7 +90,7 @@ php artisan migrate --seed
 
 ## 6) Lancer l'application en développement
 
-Ce projet utilise Vite pour le frontend et Laravel pour le backend. Ouvrez deux terminaux ou lancez les deux commandes en parallèle.
+Ce projet utilise le framework Laravel. Ouvrez le terminal et lancez la commande suivant.
 
 Terminal :
 
@@ -102,3 +103,11 @@ Ensuite ouvrez dans le navigateur :
 - http://127.0.0.1:8000
 
 ---
+
+## Les pages du site
+
+<img src="images/img1.png" width="600" alt="Page d'accueil">
+<img src="images/img2.png" width="600" alt="Page d'accueil">
+<img src="images/img3.png" width="600" alt="Register">
+<img src="images/img4.png" width="600" alt="Login">
+<img src="images/img5.png" width="600" alt="dashboard">
