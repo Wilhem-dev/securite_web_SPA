@@ -79,33 +79,11 @@ php artisan key:generate
 
 ## 5) Migrer la base et lancer les seeders
 
-Pour créer les tables et insérer les données de test :
+Pour créer les tables et insérer les données :
 
 ```bash
 php artisan migrate --seed
 ```
-
-Si vous souhaitez repartir d'une base propre :
-
-```bash
-php artisan migrate:fresh --seed
-```
-
-Créer la table Animals
-
-```bash
-CREATE TABLE `animals` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `type` varchar(191) NOT NULL,
-  `image` text NOT NULL,
-  `description` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-```
-
-Une exportation de la bdd vous serez envoyer pour les même base de donnée
 
 - ***
 
@@ -122,92 +100,5 @@ composer run dev
 Ensuite ouvrez dans le navigateur :
 
 - http://127.0.0.1:8000
-
----
-
-## 7) Construction pour la production
-
-```bash
-npm run build
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-Déployer les fichiers générés dans `public/build` selon votre hébergeur.
-
----
-
-## 8) Tests
-
-Lancer les tests PHPUnit :
-
-```bash
-# avec phpunit installé via composer
-./vendor/bin/phpunit
-# ou via artisan
-php artisan test
-```
-
----
-
-## 9) Points de dépannage courants
-
-- Permissions : si Laravel ne peut pas écrire, assurez-vous que `storage/` et `bootstrap/cache` sont accessibles :
-
-```bash
-chmod -R 775 storage bootstrap/cache
-chown -R $USER:www-data storage bootstrap/cache
-```
-
-- Erreurs lors de `npm install` : supprimer `node_modules` et `package-lock.json` puis réinstaller :
-
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-- Si les assets Vite ne se chargent pas en dev : vérifiez que `npm run dev` tourne sans erreur et que Laravel peut atteindre le serveur Vite (ports ouverts).
-
-- Erreurs lors des migrations : vérifiez que les variables DB dans `.env` sont correctes et que la base est accessible.
-
----
-
-## 10) Remarques sur l'API et adaptations possibles
-
-- Si votre base de données utilise une colonne nommée `species` au lieu de `type`, adaptez le paramètre envoyé par le frontend (`?species=...`) et le contrôleur (`$request->query('species')`).
-- Le filtrage dans le contrôleur peut être rendu plus flexible (recherche insensible à la casse, mapping des synonymes, pagination, etc.).
-
----
-
-## 11) Commandes utiles récapitulatives
-
-```bash
-# installer deps backend
-composer install
-
-# installer deps frontend
-npm install
-
-# config
-cp .env.example .env
-php artisan key:generate
-
-# migrer et seed
-php artisan migrate --seed
-
-# démarrer
-php artisan serve
-npm run dev
-
-# tests
-php artisan test
-
-# build prod
-npm run build
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
 
 ---
